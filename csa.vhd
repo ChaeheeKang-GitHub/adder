@@ -27,7 +27,7 @@ architecture arch_csa16 of csa16 is
     end component mux2_1;
 
 begin 
-    stage1_0 : fa port map(a(0), b(0), carry(0), s(0), carry(1));
+    stage1_0 : fa port map(a(0), b(0), cin, s(0), carry(1));
     stage1_1 : fa port map(a(1), b(1), carry(1), s(1), carry(2));
 
     stage2_a2 : fa port map(a(2), b(2), '0', sum_a(2), carry_a(3));
@@ -79,10 +79,6 @@ begin
     stage5_a15 : fa port map(a(15), b(15), carry_a(15), sum_a(15), carry_a(16));
     stage5_b15 : fa port map(a(15), b(15), carry_b(15), sum_b(15), carry_b(16));
     stage5_mux15 : mux2_1 port map(sum_a(15), sum_b(15), carry_mux(2), s(15));
-    stage5_mux_c4 : mux2_1 port map( carry_a(16), carry_b(16), carry_mux(2), carry_mux(3));
-
-
-    carry(0) <= cin;
-    cout <= carry_mux(3);
+    stage5_mux_c4 : mux2_1 port map( carry_a(16), carry_b(16), carry_mux(2), cout);
 
 end architecture arch_csa16;
